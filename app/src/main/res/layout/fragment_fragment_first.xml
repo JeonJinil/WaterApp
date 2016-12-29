@@ -3,11 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.jeonjin_il.mysecondapp.Fragment_first">
+
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/first_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        app:rcBackgroundColor="#ffffff"
+        app:rcBackgroundPadding="2dp"
+        app:rcIconBackgroundColor="#ffffff"
+        app:rcIconPadding="5dp"
+        app:rcIconSize="40dp"
+        app:rcIconSrc="@drawable/water"
+        app:rcProgressColor="#11aaff"
+        app:rcRadius="5dp" />
+
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:id="@+id/borad"
         android:textSize="30dp"
         android:gravity="center"
@@ -19,7 +36,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/borad"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
@@ -29,9 +47,6 @@
         fab:fab_addButtonColorPressed="@color/white_pressed"
         fab:fab_addButtonPlusIconColor="@color/half_black"
         fab:fab_labelStyle="@style/menu_labels_style"
-        android:layout_marginBottom="67dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">

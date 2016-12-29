@@ -5,16 +5,26 @@
     android:orientation="vertical"
     tools:context="com.example.jeonjin_il.mysecondapp.Fragment_second">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="B" />
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/second_text" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="숫자"
+        android:ems="10"
+        android:id="@+id/second_text2" />
 
     <Button
         android:text="Button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/setting" />
-
+        android:id="@+id/second_button" />
 </LinearLayout>

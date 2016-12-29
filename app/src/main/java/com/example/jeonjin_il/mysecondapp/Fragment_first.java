@@ -1,6 +1,8 @@
 package com.example.jeonjin_il.mysecondapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -20,12 +23,15 @@ import java.util.Date;
 public class Fragment_first extends Fragment  {
 
     private DBHelper db;
+    private  Handler handler;
     private ListView listview;
     private LayoutInflater inflater;
     private View view;
-    private int Nownum = 0;
+    private int Nownum = 0,last=0;
     private int Endnum = 2000;
     private TextView board;
+    private IconRoundCornerProgressBar progress;
+    private FloatingActionButton actionA,actionB,actionC,actionD,actionE;
 
     public Fragment_first() {
         // Required empty public constructor
@@ -41,18 +47,25 @@ public class Fragment_first extends Fragment  {
         db = new DBHelper(getActivity().getApplicationContext(), "WATER.db", null, 1);
         board = (TextView) view.findViewById(R.id.borad);
 
+
+        progress = (IconRoundCornerProgressBar) view.findViewById(R.id.first_progress);
+        progress.setProgressColor(Color.parseColor("#56d2c2"));
+        progress.setProgressBackgroundColor(Color.parseColor("#757575"));
+        progress.setIconBackgroundColor(Color.parseColor("#38c0ae"));
+
         make_listview(1, false);
-        final FloatingActionButton actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
-        final FloatingActionButton actionB = (FloatingActionButton) view.findViewById(R.id.action_b);
-        final FloatingActionButton actionC = (FloatingActionButton) view.findViewById(R.id.action_c);
-        final FloatingActionButton actionD = (FloatingActionButton) view.findViewById(R.id.action_d);
-        final FloatingActionButton actionE = (FloatingActionButton) view.findViewById(R.id.action_e);
+        actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
+        actionB = (FloatingActionButton) view.findViewById(R.id.action_b);
+        actionC = (FloatingActionButton) view.findViewById(R.id.action_c);
+        actionD = (FloatingActionButton) view.findViewById(R.id.action_d);
+        actionE = (FloatingActionButton) view.findViewById(R.id.action_e);
         final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
+        setActionname();
 
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp = db.getString(1);
+                String temp = db.getWaterListString(1);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                 menuMultipleActions.toggle();
                 make_listview(1, true);
@@ -61,7 +74,7 @@ public class Fragment_first extends Fragment  {
         actionB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp = db.getString(2);
+                String temp = db.getWaterListString(2);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                 menuMultipleActions.toggle();
                 make_listview(2, true);
@@ -70,7 +83,7 @@ public class Fragment_first extends Fragment  {
         actionC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp = db.getString(3);
+                String temp = db.getWaterListString(3);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                 menuMultipleActions.toggle();
                 make_listview(3, true);
@@ -79,7 +92,7 @@ public class Fragment_first extends Fragment  {
         actionD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp = db.getString(4);
+                String temp = db.getWaterListString(4);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                 menuMultipleActions.toggle();
                 make_listview(4, true);
@@ -88,13 +101,12 @@ public class Fragment_first extends Fragment  {
         actionE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp = db.getString(5);
+                String temp = db.getWaterListString(5);
                 Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG).show();
                 menuMultipleActions.toggle();
                 make_listview(5, true);
             }
         });
-
 
 
         return view;
@@ -133,11 +145,47 @@ public class Fragment_first extends Fragment  {
             Nownum += (int) (datas.get(i).getCapacity() * (datas.get(i).getPercentage() / 100f));
         }
 
-        String temp = String.valueOf(Nownum) + " / " + String.valueOf(Endnum);
-        board.setText(temp);
+        handler = new Handler();
+        handler.postDelayed(mMyTask,1);
+
+
 
 
     }
 
+    private Runnable mMyTask = new Runnable() {
+        public void run() {
+            if(last < Nownum) {
+                progress.setMax(Endnum);
+                progress.setProgress(last);
+                last+=1;
+                handler.postDelayed(this, 1);
+                String temp = String.valueOf(last) + " / " + String.valueOf(Endnum);
+                board.setText(temp);
+
+            }
+            else if(last > Nownum) {
+                progress.setMax(Endnum);
+                progress.setProgress(last);
+                last-=1;
+                String temp = String.valueOf(last) + " / " + String.valueOf(Endnum);
+                board.setText(temp);
+                handler.postDelayed(this,1);
+            }
+            else{
+                String temp = String.valueOf(Nownum) + " / " + String.valueOf(Endnum);
+                board.setText(temp);
+            }
+
+        }
+    };
+
+    public void setActionname(){
+        actionA.setTitle(db.getWaterListString(1)+"\n"+db.getWaterListInt(1)+"ml"+"\n"+"수분 : 100%");
+        actionB.setTitle(db.getWaterListString(2)+"\n"+db.getWaterListInt(2)+"ml"+"\n"+"수분 : 100%");
+        actionC.setTitle(db.getWaterListString(3)+"\n"+db.getWaterListInt(3)+"ml"+"\n"+"수분 : -50%");
+        actionD.setTitle(db.getWaterListString(4)+"\n"+db.getWaterListInt(4)+"ml"+"\n"+"수분 : 80%");
+        actionE.setTitle(db.getWaterListString(5)+"\n"+db.getWaterListInt(5)+"ml"+"\n"+"수분 : 80%");
+    }
 
 }

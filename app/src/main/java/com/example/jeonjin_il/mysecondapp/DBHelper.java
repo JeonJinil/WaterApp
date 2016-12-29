@@ -34,11 +34,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM WATERLIST ", null);
         if( !cursor.moveToNext()){
-            db.execSQL("INSERT INTO WATERLIST VALUES(null,'물한잔 200ml' ,200 , 100);");
-            db.execSQL("INSERT INTO WATERLIST VALUES(null,'생수한통 500ml' ,500 , 100);");
-            db.execSQL("INSERT INTO WATERLIST VALUES(null,'커피 한잔 500ml' ,500 , -50);");
-            db.execSQL("INSERT INTO WATERLIST VALUES(null,'주스 300ml' ,300 , 80);");
-            db.execSQL("INSERT INTO WATERLIST VALUES(null,'우유 200ml' ,200 , 80);");
+            db.execSQL("INSERT INTO WATERLIST VALUES(null,'나의물잔' ,200 , 100);");
+            db.execSQL("INSERT INTO WATERLIST VALUES(null,'생수한통' ,500 , 100);");
+            db.execSQL("INSERT INTO WATERLIST VALUES(null,'커피' ,500 , -50);");
+            db.execSQL("INSERT INTO WATERLIST VALUES(null,'주스' ,300 , 80);");
+            db.execSQL("INSERT INTO WATERLIST VALUES(null,'우유' ,200 , 80);");
 
             db.close();
         }
@@ -56,10 +56,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void changeWater(int id , String name){
+    public void changeWater(int id , String name,int num){
         //id 는 1번부터 시작임
         SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("UPDATE WATERLIST  SET name = '"+name+"' WHERE id='"+id+"'");
+        db.execSQL("UPDATE WATERLIST  SET name = '"+name+"', capacity = '"+num+"' WHERE id='"+id+"'");
+
     }
 
     public ArrayList<WaterList> getDatas(String day){
@@ -83,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return ret;
     }
 
-    public String getString(int id){
+    public String getWaterListString(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT name FROM WATERLIST WHERE id ='"+id+"' ", null);
 
@@ -94,4 +95,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return ret;
     }
 
+    public int getWaterListInt(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT capacity FROM WATERLIST WHERE id ='"+id+"' ", null);
+
+        cursor.moveToNext();
+        int ret = cursor.getInt(0);
+        db.close();
+
+        return ret;
+    }
 }

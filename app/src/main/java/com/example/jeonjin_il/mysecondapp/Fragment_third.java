@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import static com.google.android.gms.internal.a.R;
+
 
 public class Fragment_third extends Fragment {
 
@@ -17,8 +19,12 @@ public class Fragment_third extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(com.example.jeonjin_il.mysecondapp.R.layout.fragment_fragment_third, container, false);
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_third, container, false);
+        return view;
     }
 
 
