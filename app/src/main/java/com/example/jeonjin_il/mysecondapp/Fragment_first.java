@@ -1,5 +1,6 @@
 package com.example.jeonjin_il.mysecondapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +24,7 @@ import java.util.Date;
 public class Fragment_first extends Fragment  {
 
     private DBHelper db;
-    private  Handler handler;
+    private  Handler handler,servicehandler;
     private ListView listview;
     private LayoutInflater inflater;
     private View view;
@@ -109,6 +110,10 @@ public class Fragment_first extends Fragment  {
         });
 
 
+
+//        servicehandler = new Handler();
+//        servicehandler.postDelayed(mMyService,5000);
+
         return view;
     }
 
@@ -177,6 +182,15 @@ public class Fragment_first extends Fragment  {
                 board.setText(temp);
             }
 
+        }
+    };
+
+    private Runnable mMyService = new Runnable() {
+        public void run() {
+            //Service
+            getActivity().startService(new Intent(getActivity(), MyService.class));
+            getActivity().stopService(new Intent(getActivity(), MyService.class));
+            servicehandler.postDelayed(mMyService,5000);
         }
     };
 

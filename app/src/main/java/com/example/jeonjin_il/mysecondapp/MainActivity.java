@@ -2,7 +2,6 @@ package com.example.jeonjin_il.mysecondapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -83,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
 
-        startService(new Intent(getApplication(), MyService.class));
-//        handler = new Handler();
-//        handler.postDelayed(mMyTask,10000);
-
 
     }
     public void setDefault(){
@@ -95,13 +90,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private Runnable mMyTask = new Runnable() {
-        public void run() {
-            //Service
-            startService(new Intent(getApplication(), MyService.class));
-            stopService(new Intent(getApplication(), MyService.class));
-            handler.postDelayed(mMyTask,10000);
-        }
-    };
+
 }
 

@@ -92,7 +92,7 @@ public class Adapter extends BaseAdapter  {
             @Override
             public void onClick(View v) {
                 db = new DBHelper(context,"WATER.db",null,1);
-                db.delete_history(datas.get(position).getId());
+                db.delete_history(datas.get(position).getId(), datas.get(position).getWater_id() , datas.get(position).getDay());
                 datas.remove(position);
                 Adapter.this.notifyDataSetChanged();
                 customListner.onButtonClickListner(position,datas);
